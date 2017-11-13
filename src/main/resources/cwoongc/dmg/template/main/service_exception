@@ -1,0 +1,26 @@
+package @domainModuleFullName@.exception;
+
+@exceptionImports@
+
+public class @uPrefix@ServiceException extends @baseException@ {
+
+    private static final String MSG_PREFIX = "[" + @uPrefix@ServiceException.class.getName().replace("Exception","") + "]";
+
+    public @uPrefix@ServiceException(String msg) { super(MSG_PREFIX + msg);}
+
+    public @uPrefix@ServiceException(Throwable cause) { super(MSG_PREFIX, cause); }
+
+    public @uPrefix@ServiceException(String message, Throwable exception) {
+        super(MSG_PREFIX + message, exception);
+    }
+
+    public @uPrefix@ServiceException(ExceptionEnumTypes exceptionEnumTypes){ super(MSG_PREFIX + exceptionEnumTypes.getMessage());}
+
+    public @uPrefix@ServiceException(ExceptionEnumTypes exceptionEnumTypes, String msg){
+        super(replaceErrorMsg(exceptionEnumTypes.getMessage(), MSG_PREFIX + msg));
+    }
+
+    public @uPrefix@ServiceException(ExceptionEnumTypes exceptionEnumTypes, String[] msgs){
+        super(replaceErrorMsg(exceptionEnumTypes.getMessage(), MSG_PREFIX + msgs));
+    }
+}

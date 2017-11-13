@@ -29,9 +29,20 @@ class DomainModuleGenerator implements Plugin<Project> {
         ]
 
         project.task(option, "genDir") {
+
             doFirst {
-                if(project.tasks.genAllDir.dir != null) {
+                if(project.tasks.genAllClass.dir != null) {
+                    dir = project.tasks.genAllClass.dir
+                }
+                else if(project.tasks.genClass.dir != null) {
+                    dir = project.tasks.genClass.dir
+                }
+                else if(project.tasks.genAllDir.dir != null) {
                     dir = project.tasks.genAllDir.dir
+                }
+
+                if(project.tasks.genAllClass.prefix != null) {
+                    prefix = project.tasks.genAllClass.prefix
                 }
             }
         }
@@ -44,8 +55,21 @@ class DomainModuleGenerator implements Plugin<Project> {
 
         project.task(option, "genTestDir") {
             doFirst {
-                if(project.tasks.genAllDir.dir != null) {
+                if(project.tasks.genAllClass.dir != null) {
+                    dir = project.tasks.genAllClass.dir
+                }
+                else if(project.tasks.genTestClass.dir != null) {
+                    dir = project.tasks.genTestClass.dir
+                }
+                else if(project.tasks.genAllDir.dir != null) {
                     dir = project.tasks.genAllDir.dir
+                }
+
+                if(project.tasks.genAllClass.prefix != null) {
+                    prefix = project.tasks.genAllClass.prefix
+                }
+                else if(project.tasks.genTestClass.prefix != null) {
+                    prefix = project.tasks.genTestClass.prefix
                 }
             }
         }
@@ -58,6 +82,56 @@ class DomainModuleGenerator implements Plugin<Project> {
         ]
 
         project.task(option, "genAllDir")
+
+
+        option = [
+                "type":MainClassGeneratingTask
+                ,"group":"DMG(Domain Module Generator)"
+                ,"description":"Generates main role module's default source and resource files."
+                ,"dependsOn":["genDir"]
+        ]
+
+        project.task(option, "genClass") {
+            doFirst {
+                if(project.tasks.genAllClass.dir != null) {
+                    dir = project.tasks.genAllClass.dir
+                }
+                if(project.tasks.genAllClass.prefix != null) {
+                    prefix = project.tasks.genAllClass.prefix
+                }
+            }
+        }
+
+        option = [
+                "type":TestClassGeneratingTask
+                ,"group":"DMG(Domain Module Generator)"
+                ,"description":"Generates test role module's default source and resource files."
+                ,"dependsOn":["genTestDir"]
+        ]
+
+        project.task(option, "genTestClass") {
+            doFirst {
+                if(project.tasks.genAllClass.dir != null) {
+                    dir = project.tasks.genAllClass.dir
+                }
+                if(project.tasks.genAllClass.prefix != null) {
+                    prefix = project.tasks.genAllClass.prefix
+                }
+            }
+        }
+
+        option = [
+                "type":AllClassGeneratingTask
+                ,"group":"DMG(Domain Module Generator)"
+                ,"description":"Generates main and test role module's default source and resource files."
+                ,"dependsOn":["genAllDir"]
+        ]
+
+        project.task(option, "genAllClass")
+
+
+
+
 
     }
 

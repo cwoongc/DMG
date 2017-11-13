@@ -1,0 +1,7 @@
+package @domainModuleFullName@.message;
+
+public class @uPrefix@ServiceExceptionMessage {
+
+    public static final String @cPrefix@_INSERT_ERROR = "@uPrefix@ 등록 오류";
+
+}

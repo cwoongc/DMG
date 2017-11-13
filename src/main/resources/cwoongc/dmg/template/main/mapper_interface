@@ -1,0 +1,11 @@
+package @domainModuleFullName@.mapper;
+
+import org.apache.ibatis.annotations.Mapper;
+import @domainModuleFullName@.entity.@uPrefix@ExampleEntity;
+
+@Mapper
+public interface @uPrefix@Mapper {
+
+    int insert@uPrefix@(@uPrefix@ExampleEntity @lPrefix@ExampleEntity);
+
+}

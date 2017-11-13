@@ -1,0 +1,63 @@
+package @domainModuleFullName@.validate;
+
+import @domainModuleFullName@.entity.@uPrefix@ExampleEntity; //Fixme
+import @domainModuleFullName@.code.@uPrefix@ExampleCd; //Fixme
+import @domainModuleFullName@.exception.@uPrefix@ValidateException;
+import @domainModuleFullName@.message.@uPrefix@ValidateExceptionMessage;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+@Component
+@Slf4j
+public class @uPrefix@Validate {
+
+    //Fixme
+    public void validateInsert(@uPrefix@ExampleEntity @lPrefix@exampleEntity) {
+        isExampleNameEmpty(@lPrefix@exampleEntity);
+        isExampleCdInvalid(@lPrefix@exampleEntity);
+    }
+
+    //Fixme
+    public void validateUpdate(@uPrefix@ExampleEntity @lPrefix@exampleEntity) {
+        isExampleNameEmpty(@lPrefix@exampleEntity);
+        isExampleCdInvalid(@lPrefix@exampleEntity);
+    }
+
+    //Fixme
+    public void isExampleNameEmpty(@uPrefix@ExampleEntity @lPrefix@exampleEntity) {
+        String exampleName = @lPrefix@exampleEntity.getExampleName();
+        if(exampleName == null || exampleName.isEmpty())
+            throwException(@uPrefix@ValidateExceptionMessage.EXAMPLE_NAME_IS_EMPTY);
+    }
+
+    //Fixme
+    public void isExampleCdInvalid(@uPrefix@ExampleEntity @lPrefix@exampleEntity) {
+        String code = @lPrefix@exampleEntity.getExampleCd();
+        if(code == null && code.isEmpty()) {
+
+            boolean exists = false;
+
+            for(@uPrefix@ExampleCd exampleCd : @uPrefix@ExampleCd.values()) { //Fixme
+                if(exampleCd.code.equals(code)) {
+                    exists = true;
+                    break;
+                }
+            }
+
+            if(!exists)
+                throwException(@uPrefix@ValidateExceptionMessage.EXAMPLE_CD_IS_INVALID);
+        }
+    }
+
+
+    private void throwException(String message) {
+        @uPrefix@ValidateException threx = new @uPrefix@ValidateException(message);
+        if(log.isErrorEnabled()) {
+            log.error(threx.getMessage(), threx);
+        }
+        throw threx;
+    }
+
+
+
+}
