@@ -191,7 +191,7 @@ class MainClassGeneratingTask extends DefaultTask {
             dest.withWriter { w ->
                 source.eachLine { line ->
                     String l = line
-                    l = l.replaceAll("@domainModuleFullName@","${domainModuleRootDir}/${dir}");
+                    l = l.replaceAll("@domainModuleFullName@","${project.DMG.domainModuleRootPackage}.${dir}");
 
                     l = l.replaceAll("@uPrefix@","${uPrefix}")
 
@@ -218,7 +218,7 @@ class MainClassGeneratingTask extends DefaultTask {
     }
 
 
-    void throwException(String msg) {
+    def throwException(String msg) {
         println msg
         throw new GradleException(msg)
     }

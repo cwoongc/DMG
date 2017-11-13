@@ -124,7 +124,7 @@ class DomainModuleGenerator implements Plugin<Project> {
                 "type":AllClassGeneratingTask
                 ,"group":"DMG(Domain Module Generator)"
                 ,"description":"Generates main and test role module's default source and resource files."
-                ,"dependsOn":["genAllDir"]
+                ,"dependsOn":["genClass", "genTestClass"]
         ]
 
         project.task(option, "genAllClass")
