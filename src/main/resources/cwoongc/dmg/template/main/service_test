@@ -1,0 +1,49 @@
+package @domainModuleFullName@.service;
+
+import @domainModuleFullName@.mapper.@uPrefix@ServiceTestMapper;
+
+import lombok.extern.slf4j.Slf4j;
+import org.junit.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
+
+
+@Slf4j
+@RunWith(SpringRunner.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@ActiveProfiles("local")
+@SpringBootTest
+public class @uPrefix@ServiceTest {
+
+    @Autowired
+    private @uPrefix@ServiceImpl @lPrefix@Service;
+
+    @Autowired
+    private @uPrefix@ServiceTestMapper @lPrefix@ServiceTestMapper;
+
+    @Before
+    public void before() {
+
+    }
+
+    @Test
+    public void t010_test1Name() {
+
+    }
+
+    @Test
+    public void t020_test2Name() {
+
+    }
+
+    @After
+    public void after() {
+
+    }
+
+
+}

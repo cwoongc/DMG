@@ -60,5 +60,20 @@ class GeneratingTaskValidator {
 
     }
 
+    static boolean validatePrefix(String prefix) {
+
+        boolean usePrefix = false;
+
+        usePrefix = (!(prefix == null) && !(prefix.isEmpty()))
+
+        if(usePrefix) {
+
+            if(prefix.length() < 2)
+                throw new GradleException("the prefix's length is too short. It must be more than 2.")
+        }
+
+        return usePrefix;
+    }
+
 
 }

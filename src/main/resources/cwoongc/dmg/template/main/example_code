@@ -1,0 +1,29 @@
+package @domainModuleFullName@.code;
+
+
+/**
+ * PD999 예제코드
+ * PD_PRD_EXAMPLE.@lPrefix@Cd
+ */
+public enum @uPrefix@ExampleCd {
+
+    EXAMPLE_PRICE("01","예제가"),
+    EXAMPLE_CARD("02","예제카드"),
+
+    ;
+
+
+    public final String groupCode = "PD999";
+    public final String groupCodeName = "예제코드";
+    public final String code;
+    public final String codeName;
+
+
+    @uPrefix@ExampleCd(String code, String codeName) {
+        this.code = code;
+        this.codeName = codeName;
+    }
+
+
+
+}

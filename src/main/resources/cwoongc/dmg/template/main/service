@@ -1,0 +1,62 @@
+package @domainModuleFullName@.service;
+
+import @domainModuleFullName@.exception.@uPrefix@ServiceException;
+import @domainModuleFullName@.mapper.@uPrefix@Mapper;
+import @domainModuleFullName@.message.@uPrefix@ServiceExceptionMessage;
+import @domainModuleFullName@.validate.@uPrefix@Validate;
+import @domainModuleFullName@.entity.@uPrefix@ExampleEntity;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Slf4j
+@Service
+public class @uPrefix@ServiceImpl {
+
+
+    @Autowired
+    @uPrefix@Validate @lPrefix@Validate;
+
+    @Autowired
+    @uPrefix@Mapper @lPrefix@Mapper;
+
+
+    /**
+     * Example service method stup
+     *
+     * @param @lPrefix@ExampleEntity 등록할 @uPrefix@ExampleEntity
+     * @return 등록된 @uPrefix@ExampleEntity 수
+     * @throws @uPrefix@ServiceException
+     * @author yourname
+     */
+    public int insert@uPrefix@(List<@uPrefix@ExampleEntity> @lPrefix@ExampleEntityList) throws @uPrefix@ServiceException {
+
+        int insertCnt = 0;
+
+        try {
+            if (@lPrefix@ExampleEntityList != null) {
+
+                for (@uPrefix@ExampleEntity @lPrefix@ExampleEntity : @lPrefix@ExampleEntityList) {
+
+                    @lPrefix@Validate.validateInsert(@lPrefix@ExampleEntity);
+
+                    insertCnt += @lPrefix@Mapper.insert@uPrefix@(@lPrefix@ExampleEntity);
+                }
+            }
+
+        } catch (Exception ex) {
+            @uPrefix@ServiceException threx = new @uPrefix@ServiceException(@uPrefix@ServiceExceptionMessage.@cPrefix@_INSERT_ERROR, ex);
+            if (log.isErrorEnabled()) {
+                log.error(threx.getMessage(), threx);
+            }
+            throw threx;
+        }
+
+        return insertCnt;
+    }
+
+
+
+}
