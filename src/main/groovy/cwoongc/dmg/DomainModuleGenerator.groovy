@@ -41,9 +41,6 @@ class DomainModuleGenerator implements Plugin<Project> {
                     dir = project.tasks.genAllDir.dir
                 }
 
-                if(project.tasks.genAllClass.prefix != null) {
-                    prefix = project.tasks.genAllClass.prefix
-                }
             }
         }
 
@@ -63,13 +60,6 @@ class DomainModuleGenerator implements Plugin<Project> {
                 }
                 else if(project.tasks.genAllDir.dir != null) {
                     dir = project.tasks.genAllDir.dir
-                }
-
-                if(project.tasks.genAllClass.prefix != null) {
-                    prefix = project.tasks.genAllClass.prefix
-                }
-                else if(project.tasks.genTestClass.prefix != null) {
-                    prefix = project.tasks.genTestClass.prefix
                 }
             }
         }
