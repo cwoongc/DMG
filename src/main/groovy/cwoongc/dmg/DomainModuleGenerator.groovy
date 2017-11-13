@@ -5,19 +5,16 @@ import cwoongc.dmg.task.*
 
 
 class DomainModuleGenerator implements Plugin<Project> {
-    void apply(Project project) {
 
+    void apply(Project project) {
 
         PluginApplyValidator.validate(project);
 
         project.extensions.create("DMG", DomainModuleGeneratorExtension)
 
-
         registerTasks(project)
 
-
     }
-
 
 
     private void registerTasks(Project project) {
