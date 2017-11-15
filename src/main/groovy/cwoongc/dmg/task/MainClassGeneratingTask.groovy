@@ -178,7 +178,6 @@ class MainClassGeneratingTask extends DefaultTask {
 
         filenameNsuffix.each { filename, suffix ->
 
-//            File source = project.file(DomainModuleGenerator.class.getClassLoader().getResource("cwoongc/dmg/template/main/${filename}"))
             BufferedReader source =  new BufferedReader(new InputStreamReader(DomainModuleGenerator.class.getClassLoader().getResourceAsStream("cwoongc/dmg/template/main/${filename}")))
             File dest = null
 
@@ -222,13 +221,6 @@ class MainClassGeneratingTask extends DefaultTask {
         println msg
         throw new GradleException(msg)
     }
-
-
-
-
-
-
-
 
 
 }

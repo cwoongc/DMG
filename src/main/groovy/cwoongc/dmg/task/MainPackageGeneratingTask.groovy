@@ -6,6 +6,7 @@
 // genTestDir --dir 
 // genTestClass --dir --prefix
 // genEntity --table --module
+//
 package cwoongc.dmg.task
 import org.gradle.api.DefaultTask
 import org.gradle.api.PathValidation

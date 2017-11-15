@@ -28,17 +28,12 @@ class TestClassGeneratingTask extends DefaultTask{
     String javaDomainModuleRootDir
     String resourcesDomainModuleRootDir
 
-
     List<String> testRoleModuleNames
     List<String> testResourcesRoleModuleNames
 
 
-
-
-
     @TaskAction
     def generate() {
-
 
         domainModuleRootDir = project.DMG.domainModuleRootPackage.replace('.','/')
         javaDomainModuleRootDir = "${project.sourceSets.test.java.srcDirs[0]}/${domainModuleRootDir}"
@@ -49,13 +44,6 @@ class TestClassGeneratingTask extends DefaultTask{
         generatePrefix()
 
         copyFiles()
-
-
-
-
-
-
-
 
     }
 
