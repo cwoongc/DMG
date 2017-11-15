@@ -109,6 +109,9 @@ class DomainModuleGenerator implements Plugin<Project> {
                 if(project.tasks.genAllClass.dd != null) {
                     dd = project.tasks.genAllClass.dd
                 }
+                if(project.tasks.genAllClass.df != null) {
+                    df = project.tasks.genAllClass.df
+                }
             }
         }
 
@@ -129,6 +132,9 @@ class DomainModuleGenerator implements Plugin<Project> {
                 }
                 if(project.tasks.genAllClass.dd != null) {
                     dd = project.tasks.genAllClass.dd
+                }
+                if(project.tasks.genAllClass.df != null) {
+                    df = project.tasks.genAllClass.df
                 }
             }
         }

@@ -85,6 +85,27 @@ class GeneratingTaskValidator {
 
     }
 
+    static def validateDf(DefaultTask task, String df, DomainModuleGeneratorExtension dmgExt) {
+        String msg = null
+
+        if(df == null || df.isEmpty()) {
+            String dmgDf = dmgExt.getDf()
+
+            if(dmgDf == null || !(dmgDf.equals("abort") || dmgDf.equals("overwrite") || dmgDf.equals("skip"))) {
+                msg = "Specified 'df' property in the DMG script block has invalid value. 'dd' must be one of the three. [ abort | overwrite | skip ]"
+                throw new GradleException(msg)
+            } else {
+                task.df = dmgDf
+            }
+        } else if(df.equals("abort") || df.equals("overwrite") || df.equals("skip")) {
+            return
+        } else {
+            msg = "Specified '--df' option value is invalid. It must be one of the three. [ abort | overwrite | skip ]"
+            throw new GradleException(msg)
+        }
+
+    }
+
 
 
     static void validateFileNotExists(File file) {

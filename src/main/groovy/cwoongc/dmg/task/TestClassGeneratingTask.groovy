@@ -28,6 +28,16 @@ class TestClassGeneratingTask extends DefaultTask{
             order = 3)
     String dd
 
+    @Option(option = 'df',
+            description = """(Duplicated File)
+               Set type of way to use when the class/resource file already exists.
+               Available values are:
+                   abort (default)
+                   overwrite
+                   skip""",
+            order = 4)
+    String df
+
     boolean usePrefix
 
     String uPrefix // first char uppercase
@@ -50,6 +60,8 @@ class TestClassGeneratingTask extends DefaultTask{
         resourcesDomainModuleRootDir = "${project.sourceSets.test.resources.srcDirs[0]}/${domainModuleRootDir}"
 
         usePrefix = GeneratingTaskValidator.validatePrefix(prefix)
+
+        GeneratingTaskValidator.validateDf(this, df, project.DMG)
 
         generatePrefix()
 
@@ -155,9 +167,10 @@ class TestClassGeneratingTask extends DefaultTask{
 
     def doCopy(String roleModuleName, Map<String, String> filenameNsuffix, boolean isResource) {
 
-        filenameNsuffix.each { filename, suffix ->
+        for(Map.Entry<String,String> fns : filenameNsuffix) {
+            String filename = fns.getKey()
+            String suffix = fns.getValue()
 
-            BufferedReader source =  new BufferedReader(new InputStreamReader(DomainModuleGenerator.class.getClassLoader().getResourceAsStream("cwoongc/dmg/template/main/${filename}")))
             File dest = null
 
             if(isResource) {
@@ -165,6 +178,26 @@ class TestClassGeneratingTask extends DefaultTask{
             } else {
                 dest = new File("${javaDomainModuleRootDir}/${dir}/${roleModuleName}/${uPrefix}${suffix}")
             }
+
+            if(dest.exists()) {
+                switch (df) {
+                    case "abort":
+                        String msg = "(Duplicated file - abort)  File '${dest.getAbsolutePath()}' already exists."
+                        throwException(msg)
+                        break
+                    case "overwrite":
+                        println "(Duplicated file - overwrite) File '${dest.getAbsolutePath()}' already exists. The file will be replaced with new file."
+                        break
+                    case "skip":
+                        println "(Duplicated file - skip)  File '${dest.getAbsolutePath()}' already exists. It's been skipped to generate."
+                        continue
+                        break
+
+                }
+            }
+
+            BufferedReader source =  new BufferedReader(new InputStreamReader(DomainModuleGenerator.class.getClassLoader().getResourceAsStream("cwoongc/dmg/template/main/${filename}")))
+
 
             dest.withWriter { w ->
                 source.eachLine { line ->
