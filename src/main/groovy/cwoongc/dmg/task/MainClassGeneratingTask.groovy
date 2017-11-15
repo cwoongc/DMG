@@ -1,6 +1,7 @@
 package cwoongc.dmg.task
 
 import cwoongc.dmg.DomainModuleGenerator
+import cwoongc.dmg.task.validator.GeneratingTaskValidator
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.internal.tasks.options.Option
@@ -17,6 +18,15 @@ class MainClassGeneratingTask extends DefaultTask {
             description ="Files prefix to use. If provided, default role classes and resource files will be automatically generated. (Optional)",
             order = 2)
     String prefix
+
+    @Option(option = 'dd',
+            description = """(Duplicated Directory)
+               Set type of way to use when the directory already exists.
+               Available values are:
+                   abort (default)
+                   use""",
+            order = 3)
+    String dd
 
     boolean usePrefix
 

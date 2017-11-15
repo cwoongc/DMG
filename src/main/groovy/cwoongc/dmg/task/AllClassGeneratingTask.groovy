@@ -16,6 +16,15 @@ class AllClassGeneratingTask extends DefaultTask {
             order = 2)
     String prefix
 
+    @Option(option = 'dd',
+            description = """(Duplicated Directory)
+               Set type of way to use when the directory already exists.
+               Available values are:
+                   abort (default)
+                   use""",
+            order = 3)
+    String dd
+
 
     @TaskAction
     def generate() {

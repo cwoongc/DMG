@@ -1,16 +1,33 @@
-package cwoongc.dmg.task
+package cwoongc.dmg.task.validator
 
+import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.Project
 import cwoongc.dmg.DomainModuleGeneratorExtension
 
-class GeneratingTaskValidator {
-    static void validate(Project project, String dir) {
+import java.security.GeneralSecurityException
 
-        validateDomainModuleRootPackage(project.extensions.getByName("DMG"))
+class GeneratingTaskValidator {
+    static void validate(Project project, DefaultTask task, String dir, String dd) {
+
+        validateDMGScriptBlock(project.extensions.findByName("DMG"))
+
+        DomainModuleGeneratorExtension dmgExt = project.extensions.getByName("DMG")
+
+        validateDomainModuleRootPackage(dmgExt)
 
         validateDir(dir)
 
+        validateDd(task, dd, dmgExt)
+
+    }
+
+    private static void validateDMGScriptBlock(DomainModuleGeneratorExtension dmg) {
+
+        if(dmg == null) {
+            String msg = "'DMG' script block must be specified in the build script to configure DMG plugin."
+            throw new GradleException(msg)
+        }
     }
 
 
@@ -46,19 +63,54 @@ class GeneratingTaskValidator {
 
     }
 
+
+    private static def validateDd(DefaultTask task, String dd, DomainModuleGeneratorExtension dmgExt) {
+        String msg = null
+
+        if(dd == null || dd.isEmpty()) {
+            String dmgDd = dmgExt.getDd()
+
+            if(dmgDd == null || !(dmgDd.equals("abort") || dmgDd.equals("use"))) {
+                msg = "Specified 'dd' property in the DMG script block has invalid value. 'dd' must be one of the two. [ abort | use ]"
+                throw new GradleException(msg)
+            } else {
+                task.dd = dmgDd
+            }
+        } else if(dd.equals("abort") || dd.equals("use")) {
+           return
+        } else {
+            msg = "Specified '--dd' option value is invalid. It must be one of the two. [ abort | use ]"
+            throw new GradleException(msg)
+        }
+
+    }
+
+
+
     static void validateFileNotExists(File file) {
 
         if(file.exists()) {
             String msg = null
             if(file.isDirectory()) {
-                msg = "Directory '${file.getCanonicalPath()}' already exists."
+                msg = "(Duplicated directory - abort)  Directory '${file.getCanonicalPath()}' already exists."
             } else {
                 msg = "File '${file.getCanonicalPath()}' already exists."
             }
             throw new GradleException(msg)
         }
+    }
+
+    static void validateIsUsableDirectory(File file) {
+
+        if(file.exists() && !file.isDirectory()) {
+            String msg = "File '${file.getCanonicalPath()}' already exists and it's not a directory. It's not usable."
+            throw new GradleException(msg)
+        }
 
     }
+
+
+
 
     static boolean validatePrefix(String prefix) {
 

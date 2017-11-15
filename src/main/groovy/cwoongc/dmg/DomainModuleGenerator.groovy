@@ -38,6 +38,16 @@ class DomainModuleGenerator implements Plugin<Project> {
                     dir = project.tasks.genAllDir.dir
                 }
 
+                if(project.tasks.genAllClass.dd != null) {
+                    dd = project.tasks.genAllClass.dd
+                }
+                else if(project.tasks.genClass.dd != null) {
+                    dd = project.tasks.genClass.dd
+                }
+                else if(project.tasks.genAllDir.dd != null) {
+                    dd = project.tasks.genAllDir.dd
+                }
+
             }
         }
 
@@ -57,6 +67,16 @@ class DomainModuleGenerator implements Plugin<Project> {
                 }
                 else if(project.tasks.genAllDir.dir != null) {
                     dir = project.tasks.genAllDir.dir
+                }
+
+                if(project.tasks.genAllClass.dd != null) {
+                    dd = project.tasks.genAllClass.dd
+                }
+                else if(project.tasks.genTestClass.dd != null) {
+                    dd = project.tasks.genTestClass.dd
+                }
+                else if(project.tasks.genAllDir.dd != null) {
+                    dd = project.tasks.genAllDir.dd
                 }
             }
         }
@@ -86,6 +106,9 @@ class DomainModuleGenerator implements Plugin<Project> {
                 if(project.tasks.genAllClass.prefix != null) {
                     prefix = project.tasks.genAllClass.prefix
                 }
+                if(project.tasks.genAllClass.dd != null) {
+                    dd = project.tasks.genAllClass.dd
+                }
             }
         }
 
@@ -103,6 +126,9 @@ class DomainModuleGenerator implements Plugin<Project> {
                 }
                 if(project.tasks.genAllClass.prefix != null) {
                     prefix = project.tasks.genAllClass.prefix
+                }
+                if(project.tasks.genAllClass.dd != null) {
+                    dd = project.tasks.genAllClass.dd
                 }
             }
         }

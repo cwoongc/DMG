@@ -25,7 +25,7 @@ dependencies {
 }
 
 group = "cwoongc"
-version = "0.8"
+version = "0.8.2"
 
 // The configuration example below shows the minimum required properties
 // configured to publish your plugin to the plugin portal
@@ -59,7 +59,7 @@ pluginBundle {
       id = 'cwoongc.DMG'
       displayName = 'cwoongc\'s DMG(Domain Module Generator)'
       tags = ['domain','module','generator']
-      version = '0.8'
+      version = '0.8.2'
     }
   }
 
@@ -79,6 +79,6 @@ pluginBundle {
   mavenCoordinates {
     groupId = "cwoongc"
     artifactId = "DomainModuleGenerator"
-    version = "0.8"
+    version = "0.8.2"
   }
 }
