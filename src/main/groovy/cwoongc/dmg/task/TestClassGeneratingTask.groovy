@@ -1,6 +1,7 @@
 package cwoongc.dmg.task
 
 import cwoongc.dmg.DomainModuleGenerator
+import cwoongc.dmg.task.validator.GeneratingTaskValidator
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.internal.tasks.options.Option
@@ -18,6 +19,25 @@ class TestClassGeneratingTask extends DefaultTask{
             order = 2)
     String prefix
 
+    @Option(option = 'dd',
+            description = """(Duplicated Directory)
+               Set type of way to use when the directory already exists.
+               Available values are:
+                   abort (default)
+                   use""",
+            order = 3)
+    String dd
+
+    @Option(option = 'df',
+            description = """(Duplicated File)
+               Set type of way to use when the class/resource file already exists.
+               Available values are:
+                   abort (default)
+                   overwrite
+                   skip""",
+            order = 4)
+    String df
+
     boolean usePrefix
 
     String uPrefix // first char uppercase
@@ -28,17 +48,12 @@ class TestClassGeneratingTask extends DefaultTask{
     String javaDomainModuleRootDir
     String resourcesDomainModuleRootDir
 
-
     List<String> testRoleModuleNames
     List<String> testResourcesRoleModuleNames
 
 
-
-
-
     @TaskAction
     def generate() {
-
 
         domainModuleRootDir = project.DMG.domainModuleRootPackage.replace('.','/')
         javaDomainModuleRootDir = "${project.sourceSets.test.java.srcDirs[0]}/${domainModuleRootDir}"
@@ -46,16 +61,11 @@ class TestClassGeneratingTask extends DefaultTask{
 
         usePrefix = GeneratingTaskValidator.validatePrefix(prefix)
 
+        GeneratingTaskValidator.validateDf(this, df, project.DMG)
+
         generatePrefix()
 
         copyFiles()
-
-
-
-
-
-
-
 
     }
 
@@ -157,9 +167,10 @@ class TestClassGeneratingTask extends DefaultTask{
 
     def doCopy(String roleModuleName, Map<String, String> filenameNsuffix, boolean isResource) {
 
-        filenameNsuffix.each { filename, suffix ->
+        for(Map.Entry<String,String> fns : filenameNsuffix) {
+            String filename = fns.getKey()
+            String suffix = fns.getValue()
 
-            BufferedReader source =  new BufferedReader(new InputStreamReader(DomainModuleGenerator.class.getClassLoader().getResourceAsStream("cwoongc/dmg/template/main/${filename}")))
             File dest = null
 
             if(isResource) {
@@ -167,6 +178,26 @@ class TestClassGeneratingTask extends DefaultTask{
             } else {
                 dest = new File("${javaDomainModuleRootDir}/${dir}/${roleModuleName}/${uPrefix}${suffix}")
             }
+
+            if(dest.exists()) {
+                switch (df) {
+                    case "abort":
+                        String msg = "(Duplicated file - abort)  File '${dest.getAbsolutePath()}' already exists."
+                        throwException(msg)
+                        break
+                    case "overwrite":
+                        println "(Duplicated file - overwrite) File '${dest.getAbsolutePath()}' already exists. The file will be replaced with new file."
+                        break
+                    case "skip":
+                        println "(Duplicated file - skip)  File '${dest.getAbsolutePath()}' already exists. It's been skipped to generate."
+                        continue
+                        break
+
+                }
+            }
+
+            BufferedReader source =  new BufferedReader(new InputStreamReader(DomainModuleGenerator.class.getClassLoader().getResourceAsStream("cwoongc/dmg/template/main/${filename}")))
+
 
             dest.withWriter { w ->
                 source.eachLine { line ->

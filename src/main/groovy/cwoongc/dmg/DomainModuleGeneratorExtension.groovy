@@ -3,10 +3,16 @@ package cwoongc.dmg
 class DomainModuleGeneratorExtension {
 
     private String domainModuleRootPackage
+    private String dd = "abort" //abort, use
+    private String df = "abort"  //abort, overwrite, skip
+
+
+
     private List<String> roleModuleNames = ["code","entity", "exception", "mapper","message","service","validate", "vo"]
     private List<String> resourcesRoleModuleNames = ["mapper"]
     private List<String> testRoleModuleNames = ["mapper","service"]
     private List<String> testResourcesRoleModuleNames = ["mapper"]
+
     private String baseException
     private String exceptionImports
 
@@ -26,5 +32,11 @@ class DomainModuleGeneratorExtension {
 
     public String getExceptionImports() { return exceptionImports }
     public void setExceptionImports(String exceptionImports) { this.exceptionImports = exceptionImports}
+
+    public String getDd() {return this.dd}
+    public void setDd(String dd) { this.dd = dd}
+
+    public String getDf() {return this.df}
+    public void setDf(String df) {this.df = df }
 
 }

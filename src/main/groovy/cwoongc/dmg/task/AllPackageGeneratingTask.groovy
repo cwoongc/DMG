@@ -13,6 +13,15 @@ class AllPackageGeneratingTask extends DefaultTask {
             order = 1)
     String dir
 
+    @Option(option = 'dd',
+            description = """(Duplicated Directory)
+               Set type of way to use when the directory already exists.
+               Available values are:
+                   abort (default)
+                   use""",
+            order = 2)
+    String dd
+
     @TaskAction
     def generate() {
     }
