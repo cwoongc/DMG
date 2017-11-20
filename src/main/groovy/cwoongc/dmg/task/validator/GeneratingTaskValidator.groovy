@@ -22,6 +22,40 @@ class GeneratingTaskValidator {
 
     }
 
+    static void validate(Project project, DefaultTask task, String dir, String dd, String df) {
+        validateDMGScriptBlock(project.extensions.findByName("DMG"))
+
+        DomainModuleGeneratorExtension dmgExt = project.extensions.getByName("DMG")
+
+        validateDomainModuleRootPackage(dmgExt)
+
+        validateDir(dir)
+
+        validateDd(task, dd, dmgExt)
+
+        validateDf(task, df, dmgExt)
+    }
+
+    static void validate(Project project, DefaultTask task, String dir, String table, String id, String dd, String df) {
+        validateDMGScriptBlock(project.extensions.findByName("DMG"))
+
+        DomainModuleGeneratorExtension dmgExt = project.extensions.getByName("DMG")
+
+        validateDomainModuleRootPackage(dmgExt)
+
+        validateDir(dir)
+
+        validateDd(task, dd, dmgExt)
+
+        validateDf(task, df, dmgExt)
+
+        validateDataSourceId(task, id, dmgExt)
+
+        validateTableName(task, table)
+    }
+
+
+
     private static void validateDMGScriptBlock(DomainModuleGeneratorExtension dmg) {
 
         if(dmg == null) {
@@ -104,6 +138,45 @@ class GeneratingTaskValidator {
             throw new GradleException(msg)
         }
 
+    }
+
+    static def validateDataSourceId(DefaultTask task, String id, DomainModuleGeneratorExtension dmgExt) {
+        String msg = null
+        LinkedHashMap<String, DomainModuleGeneratorExtension.DataSource> dataSources = dmgExt.dataSources
+
+        if(id == null || id.isEmpty()) {
+
+            if (dataSources.size() == 0) {
+                msg = "'dataSource' script block must be specified in the DMG script block to use this task."
+                throw new GradleException(msg)
+            } else {
+                task.dataSourceId = dataSources.entrySet()[0].getKey()
+            }
+
+        } else if(!dataSources.containsKey(id)){
+            msg = "Specified '--id' option value is invalid. It must be one of the followings. [ ${dataSources.keySet().join(" | ")} ]"
+            throw new GradleException(msg)
+        } else {
+            task.dataSourceId = dataSources.keySet()[0]
+        }
+    }
+
+    static def validateTableName(DefaultTask task, String table) {
+        String msg = null
+        if(table == null || table.isEmpty()) {
+            msg = "'--table' option is mandatory."
+            throw new GradleException(msg)
+        } else {
+
+            table = table.toUpperCase()
+            String pattern = '^[A-Z][A-Z0-9_]*$'
+            if(!table.matches(pattern)) {
+                msg = "'--table' option value must form '[A-Z][A-Z0-9_]*' format. The specified string is invalid format."
+                throw new GradleException(msg)
+            } else {
+                task.table = table
+            }
+        }
     }
 
 

@@ -10,7 +10,7 @@ class DomainModuleGenerator implements Plugin<Project> {
 
         PluginApplyValidator.validate(project);
 
-        project.extensions.create("DMG", DomainModuleGeneratorExtension)
+        project.extensions.create("DMG", DomainModuleGeneratorExtension, project)
 
         registerTasks(project)
 
@@ -147,6 +147,15 @@ class DomainModuleGenerator implements Plugin<Project> {
         ]
 
         project.task(option, "genAllClass")
+
+
+        option = [
+                "type":EntityGeneratingTask
+                ,"group":"DMG(Domain Module Generator)"
+                ,"description":"Generates entity class using the data source."
+        ]
+
+        project.task(option, "genEntity")
 
 
 

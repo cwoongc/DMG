@@ -16,12 +16,14 @@ apply plugin: 'groovy'
 
 repositories {
     jcenter()
+    maven { url "http://11st-lib.skplanet.com:8081/nexus/content/groups/public/" }
 }
 
 dependencies {
     compile gradleApi()
     compile localGroovy()
     compile 'org.codehaus.groovy:groovy-all:2.4.12'
+//    compile('oracle:ojdbc14:10.2.0.4.0')
 }
 
 group = "cwoongc"
@@ -55,7 +57,7 @@ pluginBundle {
   // pluginBundle block will be used, but they must be set in one of the
   // two places.
   plugins {
-    greetingsPlugin {
+    DMG {
       id = 'cwoongc.DMG'
       displayName = 'cwoongc\'s DMG(Domain Module Generator)'
       tags = ['domain','module','generator']

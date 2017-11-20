@@ -15,7 +15,7 @@ class TestClassGeneratingTask extends DefaultTask{
     String dir
 
     @Option(option = "prefix",
-            description ="Files prefix to use. If provided, default role classes and resource files will be automatically generated. (Optional)",
+            description ="Files prefix to use. (Optional)",
             order = 2)
     String prefix
 
@@ -55,13 +55,14 @@ class TestClassGeneratingTask extends DefaultTask{
     @TaskAction
     def generate() {
 
+        GeneratingTaskValidator.validate(project, this, dir, dd, df)
+
         domainModuleRootDir = project.DMG.domainModuleRootPackage.replace('.','/')
         javaDomainModuleRootDir = "${project.sourceSets.test.java.srcDirs[0]}/${domainModuleRootDir}"
         resourcesDomainModuleRootDir = "${project.sourceSets.test.resources.srcDirs[0]}/${domainModuleRootDir}"
 
         usePrefix = GeneratingTaskValidator.validatePrefix(prefix)
 
-        GeneratingTaskValidator.validateDf(this, df, project.DMG)
 
         generatePrefix()
 

@@ -12,7 +12,7 @@ class AllClassGeneratingTask extends DefaultTask {
     String dir
 
     @Option(option = "prefix",
-            description ="Files prefix to use. If provided, default role classes and resource files will be automatically generated. (Optional)",
+            description ="Files prefix to use. (Optional)",
             order = 2)
     String prefix
 
