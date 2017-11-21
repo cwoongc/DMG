@@ -3,9 +3,17 @@ buildscript {
         maven {
             url "https://plugins.gradle.org/m2/"
         }
+        mavenCentral()
+        jcenter()
+//        maven { url "http://11st-lib.skplanet.com:8081/nexus/content/groups/public/" }
+        flatDir {
+            dirs 'src/main/resources/cwoongc/dmg/lib'
+        }
     }
     dependencies {
         classpath "com.gradle.publish:plugin-publish-plugin:0.9.9"
+        classpath 'org.apache.ivy:ivy:2.4.0'
+        classpath "oracle:ojdbc14:10.2.0.4.0"
     }
 }
 
@@ -16,13 +24,19 @@ apply plugin: 'groovy'
 
 repositories {
     jcenter()
-    maven { url "http://11st-lib.skplanet.com:8081/nexus/content/groups/public/" }
+//    maven { url "http://11st-lib.skplanet.com:8081/nexus/content/groups/public/" }
+//    flatDir {
+//        dirs "${rootProject.projectDir}/src/main/resources/cwoongc/dmg/lib"
+//    }
 }
 
 dependencies {
     compile gradleApi()
     compile localGroovy()
     compile 'org.codehaus.groovy:groovy-all:2.4.12'
+    compile group: 'org.apache.ivy', name: 'ivy', version: '2.4.0'
+    compile 'org.apache.commons:commons-dbcp2:2.1.1'
+//    compile files("src/main/resources/cwoongc/dmg/lib/ojdbc14-10.2.0.4.0.jar")
 //    compile('oracle:ojdbc14:10.2.0.4.0')
 }
 

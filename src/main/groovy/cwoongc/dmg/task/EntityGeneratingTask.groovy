@@ -1,6 +1,8 @@
 package cwoongc.dmg.task
 
 import cwoongc.dmg.DomainModuleGeneratorExtension
+import cwoongc.dmg.datasource.EntityGenerator
+import cwoongc.dmg.datasource.EntityGeneratorFactory
 import cwoongc.dmg.task.validator.GeneratingTaskValidator
 import groovy.sql.Sql;
 import org.gradle.api.DefaultTask
@@ -62,43 +64,10 @@ class EntityGeneratingTask extends DefaultTask {
 
         dataSource = dmg.dataSources.get(dataSourceId)
 
+        EntityGenerator entityGenerator = EntityGeneratorFactory.create(dataSource)
 
-        try {
+        entityGenerator.generate(table)
 
-
-
-
-//            DriverManager.registerDriver(Sql.classLoader.loadClass(dataSource.getDriverClassName()).newInstance())
-
-//            Sql.loadDriver(dataSource.getDriverClassName())
-
-            Class.forName(dataSource.getDriverClassName())
-
-            println dataSource.getUrl()
-            println dataSource.getUsername()
-            println dataSource.getPassword()
-            println dataSource.getDriverClassName()
-
-
-            sql = Sql.newInstance(
-                    dataSource.getUrl()
-                    ,dataSource.getUsername()
-                    ,dataSource.getPassword()
-                    ,dataSource.getDriverClassName()
-            )
-
-        } catch(ClassNotFoundException ex){
-            throw new GradleException("Unable to load driver class '${dataSource.getDriverClassName()}'")
-        }
-
-
-
-
-
-
-        println "connection created!!"
-
-        sql.close()
 
     }
 
