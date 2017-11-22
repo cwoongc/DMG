@@ -64,7 +64,7 @@ class EntityGeneratingTask extends DefaultTask {
 
         dataSource = dmg.dataSources.get(dataSourceId)
 
-        EntityGenerator entityGenerator = EntityGeneratorFactory.create(dataSource)
+        EntityGenerator entityGenerator = EntityGeneratorFactory.create(dataSource, project)
 
         entityGenerator.generate(table)
 
