@@ -6,12 +6,9 @@ import cwoongc.dmg.datasource.EntityGeneratorFactory
 import cwoongc.dmg.task.validator.GeneratingTaskValidator
 import groovy.sql.Sql;
 import org.gradle.api.DefaultTask
-import org.gradle.api.GradleException;
-import org.gradle.api.internal.tasks.options.Option;
+import org.gradle.api.internal.tasks.options.Option
 import org.gradle.api.tasks.TaskAction
 
-import java.sql.Connection
-import java.sql.DriverManager
 
 class EntityGeneratingTask extends DefaultTask {
 
@@ -66,7 +63,7 @@ class EntityGeneratingTask extends DefaultTask {
 
         EntityGenerator entityGenerator = EntityGeneratorFactory.create(dataSource, project)
 
-        entityGenerator.generate(table)
+        entityGenerator.generate(table, dir, dd, df)
 
 
     }

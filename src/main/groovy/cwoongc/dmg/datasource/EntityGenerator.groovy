@@ -4,6 +4,6 @@ import org.gradle.api.GradleException
 
 interface EntityGenerator {
 
-    void generate(String tableName) throws GradleException
+    void generate(String tableName, String dir, String dd, String df) throws GradleException
 
 }

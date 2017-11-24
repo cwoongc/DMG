@@ -1,0 +1,15 @@
+package @domainModuleFullName@.entity;
+
+import lombok.Data;
+
+/**
+ * @tableName@
+ *
+ * @tableComments@
+ */
+@Data
+public class @camelledTableName@ {
+
+@columns@
+
+}

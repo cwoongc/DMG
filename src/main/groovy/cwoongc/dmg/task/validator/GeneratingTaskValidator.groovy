@@ -169,9 +169,9 @@ class GeneratingTaskValidator {
         } else {
 
             table = table.toUpperCase()
-            String pattern = '^[A-Z][A-Z0-9_]*$'
+            String pattern = '^[a-zA-Z][a-zA-Z0-9_]*$'
             if(!table.matches(pattern)) {
-                msg = "'--table' option value must form '[A-Z][A-Z0-9_]*' format. The specified string is invalid format."
+                msg = "'--table' option value must form '[a-zA-Z][a-zA-Z0-9_]*' format. The specified string is invalid format."
                 throw new GradleException(msg)
             } else {
                 task.table = table
@@ -195,6 +195,32 @@ class GeneratingTaskValidator {
     }
 
     static void validateIsUsableDirectory(File file) {
+
+        if(file.exists() && !file.isDirectory()) {
+            String msg = "File '${file.getCanonicalPath()}' already exists and it's not a directory. It's not usable."
+            throw new GradleException(msg)
+        }
+
+    }
+
+    static void validateFileNotExists(String filepath) {
+
+        File file = new File(filepath)
+
+        if(file.exists()) {
+            String msg = null
+            if(file.isDirectory()) {
+                msg = "(Duplicated directory - abort)  Directory '${file.getCanonicalPath()}' already exists."
+            } else {
+                msg = "File '${file.getCanonicalPath()}' already exists."
+            }
+            throw new GradleException(msg)
+        }
+    }
+
+    static void validateIsUsableDirectory(String filepath) {
+
+        File file = new File(filepath)
 
         if(file.exists() && !file.isDirectory()) {
             String msg = "File '${file.getCanonicalPath()}' already exists and it's not a directory. It's not usable."

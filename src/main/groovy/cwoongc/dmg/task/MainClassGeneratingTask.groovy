@@ -2,11 +2,13 @@ package cwoongc.dmg.task
 
 import cwoongc.dmg.DomainModuleGenerator
 import cwoongc.dmg.task.validator.GeneratingTaskValidator
+import groovy.util.logging.Slf4j
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.internal.tasks.options.Option
 import org.gradle.api.tasks.TaskAction
 
+@Slf4j
 class MainClassGeneratingTask extends DefaultTask {
 
     @Option(option = "dir",
@@ -228,6 +230,10 @@ class MainClassGeneratingTask extends DefaultTask {
 
                 }
             }
+
+
+            log.debug(DomainModuleGenerator.class.getClassLoader().getResource("cwoongc/dmg/template/main/${filename}"))
+
 
             BufferedReader source =  new BufferedReader(new InputStreamReader(DomainModuleGenerator.class.getClassLoader().getResourceAsStream("cwoongc/dmg/template/main/${filename}")))
 
