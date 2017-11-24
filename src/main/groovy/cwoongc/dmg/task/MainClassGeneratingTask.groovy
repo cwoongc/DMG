@@ -144,7 +144,7 @@ class MainClassGeneratingTask extends DefaultTask {
 
             case "controller":
                 filenameNsuffix.put("controller", "Controller.java")
-
+                break
             case "entity":
                 filenameNsuffix.put("example_entity","ExampleEntity.java")
                 break
