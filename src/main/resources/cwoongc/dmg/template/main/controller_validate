@@ -1,0 +1,49 @@
+package @domainModuleFullName@.validate;
+
+import @domainModuleFullName@.vo.@uPrefix@VO; //Fixme
+import @domainModuleFullName@.exception.@uPrefix@ControllerValidateException;
+import @domainModuleFullName@.message.@uPrefix@ControllerValidateExceptionMessage;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+@Component
+@Slf4j
+public class @uPrefix@ControllerValidate {
+
+    //Fixme
+    public void validateRegister(@uPrefix@VO @lPrefix@VO) {
+        isIdEmpty(@lPrefix@VO);
+    }
+
+    //Fixme
+    public void validateUpdate(@uPrefix@VO @lPrefix@VO) {
+        isIdEmpty(@lPrefix@VO);
+        isNameEmpty(@lPrefix@VO);
+    }
+
+    //Fixme
+    public void isIdEmpty(@uPrefix@VO @lPrefix@VO) {
+        String id = @lPrefix@VO.getId();
+        if(id == null || id.isEmpty())
+            throwException(@uPrefix@ControllerValidateExceptionMessage.@cPrefix@_ID_IS_EMPTY);
+    }
+
+    //Fixme
+    public void isNameEmpty(@uPrefix@VO @lPrefix@VO) {
+        String name = @lPrefix@VO.getName();
+        if(name == null || name.isEmpty())
+            throwException(@uPrefix@ControllerValidateExceptionMessage.@cPrefix@_NAME_IS_EMPTY);
+    }
+
+
+    private void throwException(String message) {
+        @uPrefix@ValidateException threx = new @uPrefix@ControllerValidateException(message);
+        if(log.isErrorEnabled()) {
+            log.error(threx.getMessage(), threx);
+        }
+        throw threx;
+    }
+
+
+
+}

@@ -1,0 +1,10 @@
+package @domainModuleFullName@.message;
+
+public class @uPrefix@ControllerExceptionMessage {
+
+    public static final String @cPrefix@_REGISTER_ERROR = "@uPrefix@ 등록 오류";
+    public static final String @cPrefix@_UPDATE_ERROR = "@uPrefix@ 수정 오류";
+    public static final String @cPrefix@_DELETE_ERROR = "@uPrefix@ 삭제 오류";
+    public static final String @cPrefix@_GET_ERROR = "@uPrefix@ 조회 오류";
+
+}

@@ -1,0 +1,26 @@
+package @domainModuleFullName@.exception;
+
+@exceptionImports@
+
+public class @uPrefix@ControllerException extends @baseException@ {
+
+    private static final String MSG_PREFIX = "[" + @uPrefix@ControllerException.class.getName().replace("Exception","") + "]";
+
+    public @uPrefix@ControllerException(String msg) { super(MSG_PREFIX + msg);}
+
+    public @uPrefix@ControllerException(Throwable cause) { super(MSG_PREFIX, cause); }
+
+    public @uPrefix@ControllerException(String message, Throwable exception) {
+        super(MSG_PREFIX + message, exception);
+    }
+
+    public @uPrefix@ControllerException(ExceptionEnumTypes exceptionEnumTypes){ super(MSG_PREFIX + exceptionEnumTypes.getMessage());}
+
+    public @uPrefix@ControllerException(ExceptionEnumTypes exceptionEnumTypes, String msg){
+        super(replaceErrorMsg(exceptionEnumTypes.getMessage(), MSG_PREFIX + msg));
+    }
+
+    public @uPrefix@ControllerException(ExceptionEnumTypes exceptionEnumTypes, String[] msgs){
+        super(replaceErrorMsg(exceptionEnumTypes.getMessage(), MSG_PREFIX + msgs));
+    }
+}

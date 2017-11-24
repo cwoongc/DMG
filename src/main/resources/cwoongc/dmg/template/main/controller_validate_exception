@@ -1,0 +1,26 @@
+package @domainModuleFullName@.exception;
+
+@exceptionImports@
+
+public class @uPrefix@ControllerValidateException extends @baseException@ {
+
+    private static final String MSG_PREFIX = "[" + @uPrefix@ControllerValidateException.class.getName().replace("Exception","") + "]";
+
+    public @uPrefix@ControllerValidateException(String msg) { super(MSG_PREFIX + msg);}
+
+    public @uPrefix@ControllerValidateException(Throwable cause) { super(MSG_PREFIX, cause); }
+
+    public @uPrefix@ControllerValidateException(String message, Throwable exception) {
+        super(MSG_PREFIX + message, exception);
+    }
+
+    public @uPrefix@ControllerValidateException(ExceptionEnumTypes exceptionEnumTypes){ super(MSG_PREFIX + exceptionEnumTypes.getMessage());}
+
+    public @uPrefix@ControllerValidateException(ExceptionEnumTypes exceptionEnumTypes, String msg){
+        super(replaceErrorMsg(exceptionEnumTypes.getMessage(), MSG_PREFIX + msg));
+    }
+
+    public @uPrefix@ControllerValidateException(ExceptionEnumTypes exceptionEnumTypes, String[] msgs){
+        super(replaceErrorMsg(exceptionEnumTypes.getMessage(), MSG_PREFIX + msgs));
+    }
+}

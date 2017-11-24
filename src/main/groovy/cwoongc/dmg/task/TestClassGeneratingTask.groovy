@@ -138,6 +138,9 @@ class TestClassGeneratingTask extends DefaultTask{
             case "service":
                 filenameNsuffix.put("service_test", "ServiceTest.java")
                 break
+            case "controller":
+                filenameNsuffix.put("controller_test", "ControllerTest.java")
+                break
             default:
                 throwException("'${testRoleModuleName}' is a unauthorized test role module name. Can't generate files.")
                 break
@@ -210,6 +213,11 @@ class TestClassGeneratingTask extends DefaultTask{
                     l = l.replaceAll("@lPrefix@","${lPrefix}")
 
                     l = l.replaceAll("@cPrefix@","${cPrefix}")
+
+                    if(roleModuleName.equals("controller")) {
+                        l = l.replaceAll("@snakedDir@", dir.replace('_','-'))
+                    }
+
 
                     w << l + System.getProperty("line.separator")
                 }

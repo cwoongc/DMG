@@ -141,14 +141,22 @@ class MainClassGeneratingTask extends DefaultTask {
             case "code":
                 filenameNsuffix.put("example_code", "ExampleCd.java")
                 break
+
+            case "controller":
+                filenameNsuffix.put("controller", "Controller.java")
+
             case "entity":
                 filenameNsuffix.put("example_entity","ExampleEntity.java")
                 break
             case "exception":
+                if(roleModuleNames.contains("controller")) {
+                    filenameNsuffix.put("controller_exception", "ControllerException.java")
+                }
                 if(roleModuleNames.contains("service")) {
                     filenameNsuffix.put("service_exception", "ServiceException.java")
                 }
                 if(roleModuleNames.contains("validate")) {
+                    filenameNsuffix.put("controller_validate_exception", "ControllerValidateException.java")
                     filenameNsuffix.put("validate_exception", "ValidateException.java")
                 }
                 break
@@ -156,11 +164,16 @@ class MainClassGeneratingTask extends DefaultTask {
                 filenameNsuffix.put("mapper_interface","Mapper.java")
                 break
             case "message":
+                if(roleModuleNames.contains("controller") && roleModuleNames.contains("exception")) {
+                    filenameNsuffix.put("controller_exception_message", "ControllerExceptionMessage.java")
+                }
                 if(roleModuleNames.contains("service") && roleModuleNames.contains("exception")) {
                     filenameNsuffix.put("service_exception_message", "ServiceExceptionMessage.java")
                 }
                 if(roleModuleNames.contains("validate") && roleModuleNames.contains("exception")) {
+
                     filenameNsuffix.put("validate_exception_message", "ValidateExceptionMessage.java")
+                    filenameNsuffix.put("controller_validate_exception_message", "ControllerValidateExceptionMessage.java")
                 }
                 break
             case "service":
@@ -168,9 +181,10 @@ class MainClassGeneratingTask extends DefaultTask {
                 break
             case "validate":
                 filenameNsuffix.put("validate", "Validate.java")
+                filenameNsuffix.put("controller_validate", "ControllerValidate.java")
                 break
             case "vo":
-                return
+                filenameNsuffix.put("vo", "VO.java")
                 break
             default:
                 throwException("'${roleModuleName}' is a unauthorized role module name. Can't generate files.")
@@ -255,6 +269,10 @@ class MainClassGeneratingTask extends DefaultTask {
 
                         l = l.replaceAll("@baseException@", "${project.DMG.baseException}")
 
+                    }
+
+                    if(roleModuleName.equals("controller")) {
+                        l = l.replaceAll("@snakedDir@", dir.replace('_','-'))
                     }
 
 

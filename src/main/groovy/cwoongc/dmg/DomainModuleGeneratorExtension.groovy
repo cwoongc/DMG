@@ -46,9 +46,9 @@ class DomainModuleGeneratorExtension {
     private String dd = "abort" //abort, use
     private String df = "abort"  //abort, overwrite, skip
 
-    private List<String> roleModuleNames = ["code","entity", "exception", "mapper","message","service","validate", "vo"]
+    private List<String> roleModuleNames = ["code", "controller", "entity", "exception", "mapper","message","service","validate", "vo"]
     private List<String> resourcesRoleModuleNames = ["mapper"]
-    private List<String> testRoleModuleNames = ["mapper","service"]
+    private List<String> testRoleModuleNames = ["mapper","service","controller"]
     private List<String> testResourcesRoleModuleNames = ["mapper"]
 
     private String baseException

@@ -1,0 +1,129 @@
+package @domainModuleFullName@.controller;
+
+import @domainModuleFullName@.exception.@uPrefix@ControllerException;
+import @domainModuleFullName@.message.@uPrefix@ControllerExceptionMessage;
+import @domainModuleFullName@.service.@uPrefix@ServiceImpl;
+import @domainModuleFullName@.validate.@uPrefix@ControllerValidate;
+import @domainModuleFullName@.vo.@uPrefix@VO;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+
+@Slf4j
+@RestController
+@RequestMapping(value="/@snakedDir@", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+public class @uPrefix@Controller {
+
+    @Autowired
+    private @uPrefix@ServiceImpl @lPrefix@Service;
+
+    @Autowired
+    private @uPrefix@ControllerValidate @lPrefix@ControllerValidate;
+
+    /**
+     * 조회 API
+     * @param id 아이디
+     * @return 조회대상
+     * @throws @uPrefix@ControllerException
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<@uPrefix@VO> getPlanProduct(@PathVariable("id") String id) {
+
+        @uPrefix@VO @lPrefix@VO;
+
+        try {
+
+            @lPrefix@VO = @lPrefix@Service.get@uPrefix@(id);
+
+        } catch (Exception ex) {
+            @uPrefix@ControllerException threx = new @uPrefix@ControllerException(@uPrefix@ControllerExceptionMessage.@cPrefix@_GET_ERROR, ex);
+            if (log.isErrorEnabled()) {
+                log.error(threx.getMessage(), threx);
+            }
+            throw threx;
+        }
+
+        return new ResponseEntity(@lPrefix@VO, HttpStatus.OK);
+    }
+
+
+
+    /**
+     * 등록 API
+     * @param @lPrefix@VO 등록대상
+     * @return Status code 200
+     * @throws @uPrefix@ControllerException
+     */
+    @PostMapping("")
+    public ResponseEntity register@uPrefix@(@RequestBody @uPrefix@VO @lPrefix@VO) throws @uPrefix@ControllerException {
+
+        try {
+
+            @lPrefix@Service.insert@uPrefix@(@lPrefix@VO);
+
+        } catch (Exception ex) {
+            @uPrefix@ControllerException threx = new @uPrefix@ControllerException(@uPrefix@ControllerExceptionMessage.@cPrefix@_REGISTER_ERROR, ex);
+            if (log.isErrorEnabled()) {
+                log.error(threx.getMessage(), threx);
+            }
+            throw threx;
+        }
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+
+    /**
+     * 수정 API
+     * @param @lPrefix@VO
+     * @return Status code 200
+     * @throws @uPrefix@ControllerException
+     */
+    @PutMapping("")
+    public ResponseEntity update@uPrefix@(@RequestBody @uPrefix@VO @lPrefix@VO) throws @uPrefix@ControllerException {
+        try {
+
+            @lPrefix@Service.update@uPrefix@(@lPrefix@VO);
+
+        } catch (Exception ex) {
+            @uPrefix@ControllerException threx = new @uPrefix@ControllerException(@uPrefix@ControllerExceptionMessage.@cPrefix@_UPDATE_ERROR, ex);
+            if (log.isErrorEnabled()) {
+                log.error(threx.getMessage(), threx);
+            }
+            throw threx;
+        }
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    /**
+     * 삭제 API
+     * @param id
+     * @return Status code 200
+     * @throws @uPrefix@ControllerException
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete@uPrefix@(@PathVariable("id") String id) throws @uPrefix@ControllerException {
+        try {
+
+            @lPrefix@Service.delete@uPrefix@(id);
+
+        } catch (Exception ex) {
+            @uPrefix@ControllerException threx = new @uPrefix@ControllerException(@uPrefix@ControllerExceptionMessage.@cPrefix@_DELETE_ERROR, ex);
+            if (log.isErrorEnabled()) {
+                log.error(threx.getMessage(), threx);
+            }
+            throw threx;
+        }
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+
+}
+
+

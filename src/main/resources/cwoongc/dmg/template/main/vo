@@ -1,0 +1,22 @@
+package @domainModuleFullName@.vo;
+
+import lombok.Data;
+
+import java.io.Serializable;
+
+@Data
+public class @uPrefix@VO implements Serializable {
+
+    private static final long serialVersionUID = -1L;
+
+    /**
+     * 아이디
+     */
+    private String id;
+
+    /**
+     * 이름
+     */
+    private String name;
+
+}
