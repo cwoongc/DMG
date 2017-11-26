@@ -14,13 +14,5 @@ public class @uPrefix@ControllerException extends @baseException@ {
         super(MSG_PREFIX + message, exception);
     }
 
-    public @uPrefix@ControllerException(ExceptionEnumTypes exceptionEnumTypes){ super(MSG_PREFIX + exceptionEnumTypes.getMessage());}
-
-    public @uPrefix@ControllerException(ExceptionEnumTypes exceptionEnumTypes, String msg){
-        super(replaceErrorMsg(exceptionEnumTypes.getMessage(), MSG_PREFIX + msg));
-    }
-
-    public @uPrefix@ControllerException(ExceptionEnumTypes exceptionEnumTypes, String[] msgs){
-        super(replaceErrorMsg(exceptionEnumTypes.getMessage(), MSG_PREFIX + msgs));
-    }
+    @exceptionMethods@
 }

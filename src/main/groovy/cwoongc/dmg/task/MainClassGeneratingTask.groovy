@@ -157,7 +157,7 @@ class MainClassGeneratingTask extends DefaultTask {
                 }
                 if(roleModuleNames.contains("validate")) {
                     filenameNsuffix.put("controller_validate_exception", "ControllerValidateException.java")
-                    filenameNsuffix.put("validate_exception", "ValidateException.java")
+                    filenameNsuffix.put("service_validate_exception", "ServiceValidateException.java")
                 }
                 break
             case "mapper":
@@ -172,7 +172,7 @@ class MainClassGeneratingTask extends DefaultTask {
                 }
                 if(roleModuleNames.contains("validate") && roleModuleNames.contains("exception")) {
 
-                    filenameNsuffix.put("validate_exception_message", "ValidateExceptionMessage.java")
+                    filenameNsuffix.put("service_validate_exception_message", "ServiceValidateExceptionMessage.java")
                     filenameNsuffix.put("controller_validate_exception_message", "ControllerValidateExceptionMessage.java")
                 }
                 break
@@ -180,7 +180,7 @@ class MainClassGeneratingTask extends DefaultTask {
                 filenameNsuffix.put("service", "ServiceImpl.java")
                 break
             case "validate":
-                filenameNsuffix.put("validate", "Validate.java")
+                filenameNsuffix.put("service_validate", "ServiceValidate.java")
                 filenameNsuffix.put("controller_validate", "ControllerValidate.java")
                 break
             case "vo":
@@ -223,7 +223,7 @@ class MainClassGeneratingTask extends DefaultTask {
             File dest = null
 
             if(isResource) {
-                dest = new File("${resourcesDomainModuleRootDir}/${dir}/${roleModuleName}/${lPrefix}${suffix}")
+                dest = new File("${resourcesDomainModuleRootDir}/${dir}/${roleModuleName}/${uPrefix}${suffix}")
             } else {
                 dest = new File("${javaDomainModuleRootDir}/${dir}/${roleModuleName}/${uPrefix}${suffix}")
             }
@@ -255,6 +255,31 @@ class MainClassGeneratingTask extends DefaultTask {
             dest.withWriter { w ->
                 source.eachLine { line ->
                     String l = line
+
+                    if(roleModuleName.equals("exception")) {
+
+                        l = l.replaceAll("@exceptionImports@", "${project.DMG.exceptionImports}")
+
+                        String baseException = project.DMG.baseException
+
+                        if(baseException != null && !baseException.isEmpty())
+                            baseException = baseException.substring(baseException.findLastIndexOf { it == '.'} + 1)
+
+                        l = l.replaceAll("@baseException@", baseException)
+
+                        l = l.replaceAll("@exceptionMethods@", "${project.DMG.exceptionMethods}")
+
+                        if(filename.equals("controller_exception"))
+                            l = l.replaceAll("@componentRole@","Controller")
+                        else if(filename.equals("controller_validate_exception"))
+                            l = l.replaceAll("@componentRole@", "ControllerValidate")
+                        else if(filename.equals("service_exception"))
+                            l = l.replaceAll("@componentRole@","Service")
+                        else if(filename.equals("service_validate_exception"))
+                            l = l.replaceAll("@componentRole@","Validate")
+                    }
+
+
                     l = l.replaceAll("@domainModuleFullName@","${project.DMG.domainModuleRootPackage}.${dir}");
 
                     l = l.replaceAll("@uPrefix@","${uPrefix}")
@@ -263,13 +288,7 @@ class MainClassGeneratingTask extends DefaultTask {
 
                     l = l.replaceAll("@cPrefix@","${cPrefix}")
 
-                    if(roleModuleName.equals("exception")) {
 
-                        l = l.replaceAll("@exceptionImports@", "${project.DMG.exceptionImports}")
-
-                        l = l.replaceAll("@baseException@", "${project.DMG.baseException}")
-
-                    }
 
                     if(roleModuleName.equals("controller")) {
                         l = l.replaceAll("@snakedDir@", dir.replace('_','-'))

@@ -178,7 +178,7 @@ class TestClassGeneratingTask extends DefaultTask{
             File dest = null
 
             if(isResource) {
-                dest = new File("${resourcesDomainModuleRootDir}/${dir}/${roleModuleName}/${lPrefix}${suffix}")
+                dest = new File("${resourcesDomainModuleRootDir}/${dir}/${roleModuleName}/${uPrefix}${suffix}")
             } else {
                 dest = new File("${javaDomainModuleRootDir}/${dir}/${roleModuleName}/${uPrefix}${suffix}")
             }

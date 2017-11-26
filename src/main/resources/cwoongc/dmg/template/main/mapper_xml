@@ -3,10 +3,29 @@
 
 <mapper namespace="@domainModuleFullName@.mapper.@uPrefix@Mapper">
 
+    <select id="select@uPrefix@" parameterType="Long" resultType="@uPrefix@VO">
+        SELECT
+         #{id} "ID"
+         ,'cwoongc' "NAME"
+         ,'01' AS "@cPrefix@_EXAMPLE_CD"
+        FROM dual
+    </select>
 
     <insert id="insert@uPrefix@" parameterType="@uPrefix@ExampleEntity">
-
+        INSERT INTO @cPrefix@_EXAMPLE(id, name)
+        VALUES (#{id}, #{name})
     </insert>
 
+    <update id="update@uPrefix@" parameterType="@uPrefix@ExampleEntity">
+        UPDATE @cPrefix@_EXAMPLE
+        SET NAME = #{name}
+           ,@cPrefix@_EXAMPLE_CD = #{@lPrefix@ExampleCd}
+        WHERE ID = #{id}
+    </update>
+
+    <delete id="delete@uPrefix@" parameterType="@uPrefix@ExampleEntity">
+        DELETE FROM @cPrefix@_EXAMPLE
+        WHERE ID = #{id}
+    </delete>
 
 </mapper>

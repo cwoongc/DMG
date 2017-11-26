@@ -2,6 +2,8 @@ package @domainModuleFullName@.message;
 
 public class @uPrefix@ControllerValidateExceptionMessage {
 
-    public static final String @cPrefix@_ID_IS_EMTPY = "@uPrefix@ id 전달 오류.";
-    public static final String @cPrefix@_NAME_IS_EMPTY = "@uPrefix@ name 전달 오류";
+    public static final String @cPrefix@_ID_IS_EMPTY = "@uPrefix@ id 전달 누락.";
+    public static final String @cPrefix@_NAME_IS_EMPTY = "@uPrefix@ name 전달 누락";
+    public static final String @cPrefix@_EXAMPLE_CD_IS_EMPTY = "@uPrefix@ 예제 코드 전달 누락";
+    public static final String @cPrefix@_EXAMPLE_CD_IS_INVALID = "유효하지않은 @uPrefix@ 예제 코드 전달";
 }

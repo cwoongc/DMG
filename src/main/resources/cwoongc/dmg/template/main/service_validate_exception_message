@@ -1,0 +1,10 @@
+package @domainModuleFullName@.message;
+
+public class @uPrefix@ServiceValidateExceptionMessage {
+
+    public static final String @cPrefix@_ID_IS_EMPTY = "@uPrefix@ id 전달이 누락되었습니다.";
+    public static final String @cPrefix@_NAME_IS_EMPTY = "@uPrefix@ name 전달이 누락되었습니다.";
+    public static final String @cPrefix@_EXAMPLE_CD_IS_EMPTY = "@uPreifx@ 예제 코드 전달이 누락되었습니다.";
+    public static final String @cPrefix@_EXAMPLE_CD_IS_INVALID = "유효하지않은 @uPrefix@ 예제 코드가 전달되었습니다.";
+
+}

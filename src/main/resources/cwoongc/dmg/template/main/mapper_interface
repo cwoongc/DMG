@@ -1,11 +1,40 @@
 package @domainModuleFullName@.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import @domainModuleFullName@.vo.@uPrefix@VO;
 import @domainModuleFullName@.entity.@uPrefix@ExampleEntity;
 
 @Mapper
 public interface @uPrefix@Mapper {
 
+    /**
+     * @uPrefix@ 조회 by PK
+     * @param id @uPrefix@ 아이디
+     * @return 조회된 @uPrefix@
+     */
+    @uPrefix@VO select@uPrefix@(@Param("id") long id);
+
+    /**
+    * @uPrefix@ 등록
+    * @param @lPrefix@ExampleEntity @uPrefix@
+    * @return 등록된 @uPrefix@ 수
+    */
     int insert@uPrefix@(@uPrefix@ExampleEntity @lPrefix@ExampleEntity);
+
+    /**
+     * @uPrefix@ 수정
+     * @param @lPrefix@ExampleEntity @uPrefix@
+     * @return 수정된 @uPrefix@ 수
+     */
+    int update@uPrefix@(@uPrefix@ExampleEntity @lPrefix@ExampleEntity);
+
+    /**
+     * @uPrefix@ 삭제
+     * @param id @uPrefix@ 아이디
+     * @return 삭제된 @uPrefix@ 수
+     */
+    int delete@uPrefix@(@Param("id") long id);
+
 
 }

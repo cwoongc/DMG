@@ -1,0 +1,81 @@
+package @domainModuleFullName@.validate;
+
+import @domainModuleFullName@.entity.@uPrefix@ExampleEntity; //Fixme
+import @domainModuleFullName@.code.@uPrefix@ExampleCd; //Fixme
+import @domainModuleFullName@.exception.@uPrefix@ServiceValidateException;
+import @domainModuleFullName@.message.@uPrefix@ServiceValidateExceptionMessage;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+@Component
+@Slf4j
+public class @uPrefix@ServiceValidate {
+
+    public void validateSelect(Long id) {
+            isIdEmpty(id);
+    }
+
+    public void validateInsert(@uPrefix@ExampleEntity @lPrefix@ExampleEntity) {
+        isIdEmpty(@lPrefix@ExampleEntity.getId());
+        isNameEmpty(@lPrefix@ExampleEntity.getName());
+        is@uPrefix@ExampleCdEmpty(@lPrefix@ExampleEntity.get@uPrefix@ExampleCd());
+        is@uPrefix@ExampleCdInvalid(@lPrefix@ExampleEntity.get@uPrefix@ExampleCd());
+    }
+
+    public void validateUpdate(@uPrefix@ExampleEntity @lPrefix@ExampleEntity) {
+        isIdEmpty(@lPrefix@ExampleEntity.getId());
+        isNameEmpty(@lPrefix@ExampleEntity.getName());
+        is@uPrefix@ExampleCdEmpty(@lPrefix@ExampleEntity.get@uPrefix@ExampleCd());
+        is@uPrefix@ExampleCdInvalid(@lPrefix@ExampleEntity.get@uPrefix@ExampleCd());
+    }
+
+    public void validateDelete(Long id) {
+        isIdEmpty(id);
+    }
+
+    public void isIdEmpty(Long id) {
+        if(id == null)
+            throwException(@uPrefix@ServiceValidateExceptionMessage.@cPrefix@_ID_IS_EMPTY);
+    }
+
+    public void isNameEmpty(String name) {
+        if(name == null || name.isEmpty())
+            throwException(@uPrefix@ServiceValidateExceptionMessage.@cPrefix@_NAME_IS_EMPTY);
+    }
+
+    private void is@uPrefix@ExampleCdEmpty(String @cPrefix@ExampleCd) {
+        if(@cPrefix@ExampleCd == null || @cPrefix@ExampleCd.isEmpty())
+            throwException(@uPrefix@ServiceValidateExceptionMessage.@cPrefix@_EXAMPLE_CD_IS_EMPTY);
+
+    }
+
+    public void is@uPrefix@ExampleCdInvalid(String code) {
+
+        if(code != null || !code.isEmpty()) {
+
+            boolean exists = false;
+
+            for(@uPrefix@ExampleCd @lPrefix@ExampleCd : @uPrefix@ExampleCd.values()) {
+                if(@lPrefix@ExampleCd.code.equals(code)) {
+                    exists = true;
+                    break;
+                }
+            }
+
+            if(!exists)
+                throwException(@uPrefix@ServiceValidateExceptionMessage.@cPrefix@_EXAMPLE_CD_IS_INVALID);
+        }
+    }
+
+
+    private void throwException(String message) {
+        @uPrefix@ServiceValidateException threx = new @uPrefix@ServiceValidateException(message);
+        if(log.isErrorEnabled()) {
+            log.error(threx.getMessage(), threx);
+        }
+        throw threx;
+    }
+
+
+
+}

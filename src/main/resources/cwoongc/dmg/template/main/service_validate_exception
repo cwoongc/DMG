@@ -1,0 +1,18 @@
+package @domainModuleFullName@.exception;
+
+@exceptionImports@
+
+public class @uPrefix@ServiceValidateException extends @baseException@ {
+
+    private static final String MSG_PREFIX = "[" + @uPrefix@ServiceValidateException.class.getName().replace("Exception","") + "]";
+
+    public @uPrefix@ServiceValidateException(String msg) { super(MSG_PREFIX + msg);}
+
+    public @uPrefix@ServiceValidateException(Throwable cause) { super(MSG_PREFIX, cause); }
+
+    public @uPrefix@ServiceValidateException(String message, Throwable exception) {
+        super(MSG_PREFIX + message, exception);
+    }
+
+    @exceptionMethods@
+}

@@ -3,13 +3,13 @@ package @domainModuleFullName@.service;
 import @domainModuleFullName@.exception.@uPrefix@ServiceException;
 import @domainModuleFullName@.mapper.@uPrefix@Mapper;
 import @domainModuleFullName@.message.@uPrefix@ServiceExceptionMessage;
-import @domainModuleFullName@.validate.@uPrefix@Validate;
+import @domainModuleFullName@.validate.@uPrefix@ServiceValidate;
 import @domainModuleFullName@.entity.@uPrefix@ExampleEntity;
+import @domainModuleFullName@.vo.@uPrefix@VO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Slf4j
 @Service
@@ -17,34 +17,56 @@ public class @uPrefix@ServiceImpl {
 
 
     @Autowired
-    @uPrefix@Validate @lPrefix@Validate;
+    @uPrefix@ServiceValidate @lPrefix@ServiceValidate;
 
     @Autowired
     @uPrefix@Mapper @lPrefix@Mapper;
 
+    /**
+     * @uPrefix@ 조회 서비스
+     * @param id @uPrefix@ 아이디
+     * @return 조회대상
+     */
+    public @uPrefix@VO get@uPrefix@(Long id) {
+
+        @uPrefix@VO @lPrefix@VO;
+
+        try {
+
+            @lPrefix@ServiceValidate.validateSelect(id);
+            @lPrefix@VO = @lPrefix@Mapper.select@uPrefix@(id);
+
+        } catch (Exception ex) {
+            @uPrefix@ServiceException threx = new @uPrefix@ServiceException(@uPrefix@ServiceExceptionMessage.@cPrefix@_GET_ERROR, ex);
+            if (log.isErrorEnabled()) {
+                log.error(threx.getMessage(), threx);
+            }
+            throw threx;
+        }
+
+        return @lPrefix@VO;
+
+    }
+
 
     /**
-     * Example service method stup
+     * @uPrefix@ 등록 서비스
      *
-     * @param @lPrefix@ExampleEntity 등록할 @uPrefix@ExampleEntity
-     * @return 등록된 @uPrefix@ExampleEntity 수
+     * @param @lPrefix@VO 등록대상 @uPrefix@
+     * @return 등록된 @uPrefix@ 수
      * @throws @uPrefix@ServiceException
-     * @author yourname
      */
-    public int insert@uPrefix@(List<@uPrefix@ExampleEntity> @lPrefix@ExampleEntityList) throws @uPrefix@ServiceException {
+    public int insert@uPrefix@(@uPrefix@VO @lPrefix@VO) throws @uPrefix@ServiceException {
 
         int insertCnt = 0;
 
         try {
-            if (@lPrefix@ExampleEntityList != null) {
 
-                for (@uPrefix@ExampleEntity @lPrefix@ExampleEntity : @lPrefix@ExampleEntityList) {
+            @uPrefix@ExampleEntity @lPrefix@ExampleEntity = @lPrefix@VO.convert@uPrefix@ExampleEntity();
 
-                    @lPrefix@Validate.validateInsert(@lPrefix@ExampleEntity);
+            @lPrefix@ServiceValidate.validateInsert(@lPrefix@ExampleEntity);
 
-                    insertCnt += @lPrefix@Mapper.insert@uPrefix@(@lPrefix@ExampleEntity);
-                }
-            }
+            insertCnt += @lPrefix@Mapper.insert@uPrefix@(@lPrefix@ExampleEntity);
 
         } catch (Exception ex) {
             @uPrefix@ServiceException threx = new @uPrefix@ServiceException(@uPrefix@ServiceExceptionMessage.@cPrefix@_INSERT_ERROR, ex);
@@ -55,6 +77,66 @@ public class @uPrefix@ServiceImpl {
         }
 
         return insertCnt;
+    }
+
+
+    /**
+     * @uPrefix@ 수정 서비스
+     *
+     * @param @lPrefix@VO 수정대상 @uPrefix@
+     * @return 수정된 @uPrefix@ 수
+     * @throws @uPrefix@ServiceException
+     */
+    public int update@uPrefix@(@uPrefix@VO @lPrefix@VO) throws @uPrefix@ServiceException {
+
+        int updateCnt = 0;
+
+        try {
+
+            @uPrefix@ExampleEntity @lPrefix@ExampleEntity = @lPrefix@VO.convert@uPrefix@ExampleEntity();
+
+            @lPrefix@ServiceValidate.validateUpdate(@lPrefix@ExampleEntity);
+
+            updateCnt += @lPrefix@Mapper.update@uPrefix@(@lPrefix@ExampleEntity);
+
+        } catch (Exception ex) {
+            @uPrefix@ServiceException threx = new @uPrefix@ServiceException(@uPrefix@ServiceExceptionMessage.@cPrefix@_UPDATE_ERROR, ex);
+            if (log.isErrorEnabled()) {
+                log.error(threx.getMessage(), threx);
+            }
+            throw threx;
+        }
+
+        return updateCnt;
+    }
+
+
+    /**
+     * @uPrefix@ 삭제 서비스
+     *
+     * @param id @uPrefix@ 아이디
+     * @return 삭제된 @uPrefix@ 수
+     * @throws @uPrefix@ServiceException
+     */
+    public int delete@uPrefix@(Long id) throws @uPrefix@ServiceException {
+
+        int deleteCnt = 0;
+
+        try {
+
+            @lPrefix@ServiceValidate.validateDelete(id);
+            deleteCnt += @lPrefix@Mapper.delete@uPrefix@(id);
+
+        } catch (Exception ex) {
+            @uPrefix@ServiceException threx = new @uPrefix@ServiceException(@uPrefix@ServiceExceptionMessage.@cPrefix@_DELETE_ERROR, ex);
+            if (log.isErrorEnabled()) {
+                log.error(threx.getMessage(), threx);
+            }
+            throw threx;
+        }
+
+        return deleteCnt;
+
     }
 
 

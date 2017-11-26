@@ -3,22 +3,35 @@ package @domainModuleFullName@.entity;
 import lombok.Data;
 
 /**
- * 예제 엔티티 Fixme
+ * @uPrefix@ 예제 엔티티
  */
 @Data
 public class @uPrefix@ExampleEntity {
 
-    private String exampleName;
+    /**
+     * @uPrefix@ 아이디
+     */
+    private Long id;
 
-    private String exampleCd;
+    /**
+     * @uPrefix@ 이름
+     */
+    private String name;
 
+    /**
+     * @uPrefix@ 예제 코드
+     */
+    private String @lPrefix@ExampleCd;
 
-    public @uPrefix@ExampleEntity() {
+    public @uPrefix@ExampleEntity() {}
+
+    public @uPrefix@ExampleEntity(long id) {
+            this.id = id;
     }
 
-    public @uPrefix@ExampleEntity(String exampleName, String exampleCd) {
-        this.exampleName = exampleName;
-        this.exampleCd = exampleCd;
+    public @uPrefix@ExampleEntity(long id, String name, String @lPrefix@ExampleCd) {
+        this.id = id;
+        this.name = name;
+        this.@lPrefix@ExampleCd = @lPrefix@ExampleCd;
     }
-
 }

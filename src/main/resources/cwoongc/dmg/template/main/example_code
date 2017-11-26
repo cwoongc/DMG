@@ -3,13 +3,12 @@ package @domainModuleFullName@.code;
 
 /**
  * PD999 예제코드
- * PD_PRD_EXAMPLE.@lPrefix@Cd
+ * @cPrefix@_EXAMPLE.@cPrefix@_EXAMPLE_CD
  */
 public enum @uPrefix@ExampleCd {
 
-    EXAMPLE_PRICE("01","예제가"),
-    EXAMPLE_CARD("02","예제카드"),
-
+    @cPrefix@_CODE_A("01","코드A값"),
+    @cPrefix@_CODE_B("02","코드B값")
     ;
 
 

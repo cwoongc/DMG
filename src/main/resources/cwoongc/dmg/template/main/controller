@@ -25,17 +25,20 @@ public class @uPrefix@Controller {
     private @uPrefix@ControllerValidate @lPrefix@ControllerValidate;
 
     /**
-     * 조회 API
-     * @param id 아이디
-     * @return 조회대상
+     * @uPrefix@ 조회 API
+     *
+     * @param id @uPrefix@ 아이디
+     * @return @uPrefix@VO, http status code 200
      * @throws @uPrefix@ControllerException
      */
     @GetMapping("/{id}")
-    public ResponseEntity<@uPrefix@VO> getPlanProduct(@PathVariable("id") String id) {
+    public ResponseEntity<@uPrefix@VO> get@uPrefix@(@PathVariable("id") Long id) {
 
         @uPrefix@VO @lPrefix@VO;
 
         try {
+
+            @lPrefix@ControllerValidate.validateGet(id);
 
             @lPrefix@VO = @lPrefix@Service.get@uPrefix@(id);
 
@@ -53,15 +56,17 @@ public class @uPrefix@Controller {
 
 
     /**
-     * 등록 API
-     * @param @lPrefix@VO 등록대상
-     * @return Status code 200
+     * @uPrefix@ 등록 API
+     * @param @lPrefix@VO 등록할 @uPrefix@
+     * @return http status code 200
      * @throws @uPrefix@ControllerException
      */
     @PostMapping("")
     public ResponseEntity register@uPrefix@(@RequestBody @uPrefix@VO @lPrefix@VO) throws @uPrefix@ControllerException {
 
         try {
+
+            @lPrefix@ControllerValidate.validateRegister(@lPrefix@VO);
 
             @lPrefix@Service.insert@uPrefix@(@lPrefix@VO);
 
@@ -78,14 +83,17 @@ public class @uPrefix@Controller {
 
 
     /**
-     * 수정 API
-     * @param @lPrefix@VO
+     * @uPrefix@ 수정 API
+     *
+     * @param @lPrefix@VO 수정할 @uPrefix@
      * @return Status code 200
      * @throws @uPrefix@ControllerException
      */
     @PutMapping("")
     public ResponseEntity update@uPrefix@(@RequestBody @uPrefix@VO @lPrefix@VO) throws @uPrefix@ControllerException {
         try {
+
+            @lPrefix@ControllerValidate.validateUpdate(@lPrefix@VO);
 
             @lPrefix@Service.update@uPrefix@(@lPrefix@VO);
 
@@ -101,14 +109,17 @@ public class @uPrefix@Controller {
     }
 
     /**
-     * 삭제 API
-     * @param id
+     * @uPrefix@ 삭제 API
+     *
+     * @param id 삭제대상 @uPrefix@ 아이디
      * @return Status code 200
      * @throws @uPrefix@ControllerException
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity delete@uPrefix@(@PathVariable("id") String id) throws @uPrefix@ControllerException {
+    public ResponseEntity delete@uPrefix@(@PathVariable("id") Long id) throws @uPrefix@ControllerException {
         try {
+
+            @lPrefix@ControllerValidate.validateDelete(id);
 
             @lPrefix@Service.delete@uPrefix@(id);
 

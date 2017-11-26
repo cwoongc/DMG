@@ -5,6 +5,53 @@ import org.gradle.api.Project
 
 class DomainModuleGeneratorExtension {
 
+
+    DomainModuleGeneratorExtension(Project project) {
+        this.project = project
+    }
+
+    DomainModuleGeneratorExtension() {}
+
+
+
+    private Project project
+    private String domainModuleRootPackage
+    private String dd = "abort" //abort, use
+    private String df = "abort"  //abort, overwrite, skip
+
+    private List<String> roleModuleNames = ["code", "controller", "entity", "exception", "mapper","message","service","validate", "vo"]
+    private List<String> resourcesRoleModuleNames = ["mapper"]
+    private List<String> testRoleModuleNames = ["mapper","service","controller"]
+    private List<String> testResourcesRoleModuleNames = ["mapper"]
+
+    private String baseException = "java.lang.RuntimeException"
+    private String exceptionImports = ""
+    private String exceptionMethods = ""
+    private Map<String,DataSource> dataSources = new LinkedHashMap<>()
+
+    String getDomainModuleRootPackage() { return this.domainModuleRootPackage}
+    void setDomainModuleRootPackage(String domainModuleRootPackage) { this.domainModuleRootPackage = domainModuleRootPackage}
+
+    List<String> getRoleModuleNames() { return this.roleModuleNames }
+    List<String> getResourcesRoleModuleNames() { return this.resourcesRoleModuleNames }
+    List<String> getTestRoleModuleNames() { return  this.testRoleModuleNames }
+    List<String> getTestResourcesRoleModuleNames() { return this.testResourcesRoleModuleNames}
+
+    String getBaseException() { return baseException}
+    void setBaseException(String baseException) {this.baseException = baseException}
+
+    String getExceptionImports() { return exceptionImports }
+    void setExceptionImports(String exceptionImports) { this.exceptionImports = exceptionImports}
+
+    String getExceptionMethods() { return exceptionMethods }
+    void setExceptionMethods(String exceptionMethods) {this.exceptionMethods = exceptionMethods}
+
+    String getDd() {return this.dd}
+    void setDd(String dd) { this.dd = dd}
+
+    String getDf() {return this.df}
+    void setDf(String df) {this.df = df }
+
     class DataSource {
         private String id
         private String url
@@ -33,50 +80,6 @@ class DomainModuleGeneratorExtension {
         String getDriverClassName() { driverClassName }
     }
 
-    DomainModuleGeneratorExtension(Project project) {
-        this.project = project
-    }
-
-    DomainModuleGeneratorExtension() {}
-
-
-
-    private Project project
-    private String domainModuleRootPackage
-    private String dd = "abort" //abort, use
-    private String df = "abort"  //abort, overwrite, skip
-
-    private List<String> roleModuleNames = ["code", "controller", "entity", "exception", "mapper","message","service","validate", "vo"]
-    private List<String> resourcesRoleModuleNames = ["mapper"]
-    private List<String> testRoleModuleNames = ["mapper","service","controller"]
-    private List<String> testResourcesRoleModuleNames = ["mapper"]
-
-    private String baseException
-    private String exceptionImports
-    private Map<String,DataSource> dataSources = new LinkedHashMap<>()
-
-
-
-    String getDomainModuleRootPackage() { return this.domainModuleRootPackage}
-    void setDomainModuleRootPackage(String domainModuleRootPackage) { this.domainModuleRootPackage = domainModuleRootPackage}
-
-    List<String> getRoleModuleNames() { return this.roleModuleNames }
-    List<String> getResourcesRoleModuleNames() { return this.resourcesRoleModuleNames }
-    List<String> getTestRoleModuleNames() { return  this.testRoleModuleNames }
-    List<String> getTestResourcesRoleModuleNames() { return this.testResourcesRoleModuleNames}
-
-    String getBaseException() { return baseException}
-    void setBaseException(String baseException) {this.baseException = baseException}
-
-    String getExceptionImports() { return exceptionImports }
-    void setExceptionImports(String exceptionImports) { this.exceptionImports = exceptionImports}
-
-    String getDd() {return this.dd}
-    void setDd(String dd) { this.dd = dd}
-
-    String getDf() {return this.df}
-    void setDf(String df) {this.df = df }
-
     DataSource dataSource(Closure cl) {
         DataSource dataSource = project.configure(new DataSource(), cl)
 
@@ -89,6 +92,9 @@ class DomainModuleGeneratorExtension {
     }
 
     Map<String,DataSource> getDataSources() { this.dataSources }
+
+
+
 
 
 

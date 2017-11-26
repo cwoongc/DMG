@@ -1,6 +1,7 @@
 package @domainModuleFullName@.validate;
 
-import @domainModuleFullName@.vo.@uPrefix@VO; //Fixme
+import @domainModuleFullName@.code.@uPrefix@ExampleCd;
+import @domainModuleFullName@.vo.@uPrefix@VO;
 import @domainModuleFullName@.exception.@uPrefix@ControllerValidateException;
 import @domainModuleFullName@.message.@uPrefix@ControllerValidateExceptionMessage;
 import lombok.extern.slf4j.Slf4j;
@@ -10,34 +11,64 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class @uPrefix@ControllerValidate {
 
-    //Fixme
+    public void validateGet(Long id) {
+        isIdEmpty(id);
+    }
+
     public void validateRegister(@uPrefix@VO @lPrefix@VO) {
-        isIdEmpty(@lPrefix@VO);
+        isIdEmpty(@lPrefix@VO.getId());
+        isNameEmpty(@lPrefix@VO.getName());
+        is@uPrefix@ExampleCdEmpty(@lPrefix@VO.get@uPrefix@ExampleCd());
+        is@uPrefix@ExampleCdInvalid(@lPrefix@VO.get@uPrefix@ExampleCd());
+
     }
 
-    //Fixme
     public void validateUpdate(@uPrefix@VO @lPrefix@VO) {
-        isIdEmpty(@lPrefix@VO);
-        isNameEmpty(@lPrefix@VO);
+        isIdEmpty(@lPrefix@VO.getId());
+        isNameEmpty(@lPrefix@VO.getName());
+        is@uPrefix@ExampleCdEmpty(@lPrefix@VO.get@uPrefix@ExampleCd());
+        is@uPrefix@ExampleCdInvalid(@lPrefix@VO.get@uPrefix@ExampleCd());
     }
 
-    //Fixme
-    public void isIdEmpty(@uPrefix@VO @lPrefix@VO) {
-        String id = @lPrefix@VO.getId();
-        if(id == null || id.isEmpty())
+    public void validateDelete(Long id) {
+        isIdEmpty(id);
+    }
+
+    public void isIdEmpty(Long id) {
+        if(id == null)
             throwException(@uPrefix@ControllerValidateExceptionMessage.@cPrefix@_ID_IS_EMPTY);
     }
 
-    //Fixme
-    public void isNameEmpty(@uPrefix@VO @lPrefix@VO) {
-        String name = @lPrefix@VO.getName();
+    public void isNameEmpty(String name) {
         if(name == null || name.isEmpty())
             throwException(@uPrefix@ControllerValidateExceptionMessage.@cPrefix@_NAME_IS_EMPTY);
     }
 
+    public void is@uPrefix@ExampleCdEmpty(String @lPrefix@ExampleCd) {
+        if(@lPrefix@ExampleCd == null || @lPrefix@ExampleCd.isEmpty())
+            throwException(@uPrefix@ControllerValidateExceptionMessage.@cPrefix@_EXAMPLE_CD_IS_EMPTY);
+    }
+
+    public void is@uPrefix@ExampleCdInvalid(String code) {
+
+        if(code != null && !code.isEmpty()) {
+
+            boolean exists = false;
+
+            for(@uPrefix@ExampleCd @lPrefix@ExampleCd : @uPrefix@ExampleCd.values()) {
+                if(@lPrefix@ExampleCd.code.equals(code)) {
+                    exists = true;
+                    break;
+                }
+            }
+
+            if(!exists)
+                throwException(@uPrefix@ControllerValidateExceptionMessage.@cPrefix@_EXAMPLE_CD_IS_INVALID);
+        }
+    }
 
     private void throwException(String message) {
-        @uPrefix@ValidateException threx = new @uPrefix@ControllerValidateException(message);
+        @uPrefix@ControllerValidateException threx = new @uPrefix@ControllerValidateException(message);
         if(log.isErrorEnabled()) {
             log.error(threx.getMessage(), threx);
         }

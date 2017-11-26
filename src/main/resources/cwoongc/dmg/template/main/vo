@@ -1,6 +1,7 @@
 package @domainModuleFullName@.vo;
 
 import lombok.Data;
+import @domainModuleFullName@.entity.@uPrefix@ExampleEntity;
 
 import java.io.Serializable;
 
@@ -10,13 +11,26 @@ public class @uPrefix@VO implements Serializable {
     private static final long serialVersionUID = -1L;
 
     /**
-     * 아이디
+     * @uPrefix@ 아이디
      */
-    private String id;
+    private Long id;
 
     /**
-     * 이름
+     * @uPrefix@ 이름
      */
     private String name;
+
+    /**
+     * @uPrefix@ 예제 코드
+     */
+    private String @lPrefix@ExampleCd;
+
+    public @uPrefix@ExampleEntity convert@uPrefix@ExampleEntity() {
+        return new @uPrefix@ExampleEntity(
+                this.id,
+                this.name,
+                this.@lPrefix@ExampleCd
+        );
+    }
 
 }
