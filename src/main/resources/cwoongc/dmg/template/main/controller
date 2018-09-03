@@ -28,7 +28,7 @@ public class @uPrefix@Controller {
      * @uPrefix@ 조회 API
      *
      * @param id @uPrefix@ 아이디
-     * @return @uPrefix@VO, http status code 200
+     * @return @uPrefix@VO, http status code 200/404
      * @throws @uPrefix@ControllerException
      */
     @GetMapping("/{id}")
@@ -50,7 +50,13 @@ public class @uPrefix@Controller {
             throw threx;
         }
 
-        return new ResponseEntity(@lPrefix@VO, HttpStatus.OK);
+        ResponseEntity<@uPrefix@VO> re;
+        if(@lPrefix@VO == null)
+            re = new ResponseEntity<@uPrefix@VO>(HttpStatus.NOT_FOUND);
+        else
+            re = new ResponseEntity<@uPrefix@VO>(@lPrefix@VO, HttpStatus.OK);
+
+        return re;
     }
 
 
@@ -58,7 +64,7 @@ public class @uPrefix@Controller {
     /**
      * @uPrefix@ 등록 API
      * @param @lPrefix@VO 등록할 @uPrefix@
-     * @return http status code 200
+     * @return http status code 201
      * @throws @uPrefix@ControllerException
      */
     @PostMapping("")
@@ -78,7 +84,7 @@ public class @uPrefix@Controller {
             throw threx;
         }
 
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
 
@@ -86,7 +92,7 @@ public class @uPrefix@Controller {
      * @uPrefix@ 수정 API
      *
      * @param @lPrefix@VO 수정할 @uPrefix@
-     * @return Status code 200
+     * @return http status code 204
      * @throws @uPrefix@ControllerException
      */
     @PutMapping("")
@@ -105,14 +111,14 @@ public class @uPrefix@Controller {
             throw threx;
         }
 
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     /**
      * @uPrefix@ 삭제 API
      *
      * @param id 삭제대상 @uPrefix@ 아이디
-     * @return Status code 200
+     * @return http status code 204
      * @throws @uPrefix@ControllerException
      */
     @DeleteMapping("/{id}")
@@ -131,7 +137,7 @@ public class @uPrefix@Controller {
             throw threx;
         }
 
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 
